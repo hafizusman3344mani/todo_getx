@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
         ),
       ),
-      home: HomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }
