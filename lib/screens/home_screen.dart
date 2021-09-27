@@ -1,3 +1,4 @@
+import 'package:android_alarm_manager/android_alarm_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -5,16 +6,44 @@ import 'package:todo_getx/controllers/todo_controller.dart';
 import 'package:todo_getx/screens/edit_todo.dart';
 import 'package:todo_getx/screens/todo_screen.dart';
 
-class HomeScreen extends StatelessWidget {
-  final TodoController todoController = Get.put(TodoController());
-
+class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final TodoController todoController = Get.put(TodoController());
+  bool isOn = false;
+  int alarmId = 1;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Todos'),
+          actions: [
+            Transform.scale(
+              scale: 2,
+              child: Switch(
+                value: isOn,
+                onChanged: (value) {
+                  setState(() {
+                    isOn = value;
+                  });
+                  if (isOn == true) {
+                    AndroidAlarmManager.periodic(
+                        const Duration(seconds: 60), alarmId, sendNotification);
+                  } else {
+                    AndroidAlarmManager.cancel(alarmId);
+                    debugPrint('Alarm Timer Canceled');
+                  }
+                },
+              ),
+            ),
+          ],
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
@@ -98,5 +127,10 @@ class HomeScreen extends StatelessWidget {
         }),
       ),
     );
+  }
+
+  void sendNotification() {
+    debugPrint('Alarm triggered');
+    todoController.sendNotification();
   }
 }

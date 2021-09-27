@@ -41,6 +41,7 @@ class TodoScreen extends StatelessWidget {
                         ),
                       );
                       Get.back();
+                      todoController.sendNotification();
                       Get.snackbar(
                         'Added!',
                         'Task added successfully',

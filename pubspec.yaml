@@ -31,7 +31,11 @@ dependencies:
   get: ^4.3.8
   get_storage: ^2.0.3
   intl: ^0.17.0
-  android_alarm_manager: ^2.0.2
+  android_alarm_manager: 2.0.1
+  flutter_local_notifications:
+  firebase_messaging: ^10.0.7
+  dio: ^4.0.0
+  firebase_core: ^1.6.0
 
 dev_dependencies:
   flutter_test:
